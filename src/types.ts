@@ -71,6 +71,7 @@ export interface Ingredient {
 export interface GrowthStageOption {
     key: GrowthStage
     label: string
+    age?: string
     weightRange?: string
 }
 
