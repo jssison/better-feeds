@@ -1,7 +1,7 @@
-import { ANIMALS } from "./data/animals";
-import { INGREDIENTS } from "./data/ingredients";
-import { NUTRIENT_REQUIREMENTS } from "./data/nutrient_reqs";
-import type { AnimalType, GrowthStage, GrowthStageOption, IngredientKey, NutrientRequirement, SpeciesGroup, UserIngredientRow } from "./types";
+import { ANIMALS } from "../data/animals";
+import { INGREDIENTS } from "../data/ingredients";
+import { NUTRIENT_REQUIREMENTS } from "../data/nutrient_reqs";
+import type { AnimalType, GrowthStage, GrowthStageOption, IngredientKey, NutrientRequirement, SpeciesGroup, UserIngredientRow } from "../data/types";
 
 //get nutrient requirement based on growth stage
 export function getNutrientRequirement(stage: GrowthStage): NutrientRequirement {

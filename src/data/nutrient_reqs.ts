@@ -1,4 +1,4 @@
-import type { GrowthStage, NutrientRequirement } from "../types"
+import type { GrowthStage, NutrientRequirement } from "./types"
 
 export const NUTRIENT_REQUIREMENTS: Record<GrowthStage, NutrientRequirement> = {
     //broiler

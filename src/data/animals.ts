@@ -1,4 +1,4 @@
-import type { AnimalOption } from "../types"
+import type { AnimalOption } from "./types"
 
 export const ANIMALS: AnimalOption[] = [
     {

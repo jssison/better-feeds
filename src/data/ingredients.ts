@@ -1,4 +1,4 @@
-import type { IngredientKey, Ingredient } from "../types"
+import type { IngredientKey, Ingredient } from "./types"
 
 export const INGREDIENTS: Record<IngredientKey, Ingredient> = {
     yellow_corn: {
