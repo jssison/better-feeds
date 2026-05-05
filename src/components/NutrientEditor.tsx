@@ -1,10 +1,14 @@
+import type { NutrientRequirement } from "../data/types";
+
+interface Props {
+  value: NutrientRequirement;
+  onChange: (val: NutrientRequirement) => void;
+}
+
 export default function NutrientEditor({
     value,
     onChange
-}: {
-    value: { crudeProtein: number, metabolizableEnergy: number}
-    onChange: any
-}) {
+}: Props) {
     return (
         <div className="flex gap-2">
             <input

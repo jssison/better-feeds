@@ -1,21 +1,23 @@
-import type { AnimalType, GrowthStage } from "../data/types";
-import { ANIMALS } from "../data/animals";
+import type { AnimalType, GrowthStage, AnimalOption, NutrientRequirement } from "../data/types";
 import { NUTRIENT_REQUIREMENTS } from "../data/nutrient_reqs";
 
+interface Props {
+  animal: AnimalOption;
+  selected: GrowthStage | null;
+  onSelect: (
+    stage: GrowthStage,
+    req: NutrientRequirement
+  ) => void;
+}
+
 export default function GrowthStageSelector({
-    animalType,
+    animal,
     selected,
     onSelect
-}: {
-    animalType: AnimalType
-    selected: GrowthStage
-    onSelect: any
-}) {
-    const animal = ANIMALS.find((a) => a.key === animalType)
-
+}: Props) {
     return (
         <div className="space-y-2">
-            {animal?.stages.map((s) => (
+            {animal.stages.map((s) => (
                 <button
                     key={s.key}
                     onClick={() => onSelect(s.key, NUTRIENT_REQUIREMENTS[s.key])}

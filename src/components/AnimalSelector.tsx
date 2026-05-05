@@ -1,7 +1,13 @@
 import { ANIMALS } from "../data/animals";
-import type { AnimalOption } from "../data/types";
+import type { AnimalOption , AnimalType} from "../data/types";
 
-export default function AnimalSelector({ selected, onSelect }: { selected: AnimalOption, onSelect: any }) {
+interface Props {
+  animals: AnimalOption[];
+  selected: AnimalType | null;
+  onSelect: (animal: AnimalOption) => void;
+}
+
+export default function AnimalSelector({ selected, onSelect }: Props) {
     return (
         <div className="grid grid-cols-3 gap-2">
             {ANIMALS.map((a) => (
@@ -9,7 +15,7 @@ export default function AnimalSelector({ selected, onSelect }: { selected: Anima
                     key={a.key}
                     onClick={() => onSelect(a)}
                     className={`p-3 rounded-xl border text-center
-                        ${selected === a ? "bg-green-200 border-green-600" : "bg-white"}    
+                        ${selected === a.key ? "bg-green-200 border-green-600" : "bg-white"}    
                     `}
                 >
                     {/* replace icon with img if needed */}

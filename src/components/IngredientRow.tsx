@@ -1,25 +1,31 @@
-import { INGREDIENTS } from "../data/ingredients";
-import type { UserIngredientRow } from "../data/types";
+import type {
+  UserIngredientRow,
+  SpeciesGroup,
+  IngredientKey,
+} from "../data/types.ts";
+import { INGREDIENTS } from "../data/ingredients.ts";
+
+interface Props {
+  row: UserIngredientRow;
+  speciesGroup: SpeciesGroup;
+  onChange: (row: UserIngredientRow) => void;
+  onRemove: () => void;
+}
 
 export default function IngredientRow({
   row,
-  speciesGroup,
   onChange,
   onRemove,
-}: {
-    row: UserIngredientRow
-    speciesGroup: string
-    onChange: any
-    onRemove: any
-}) {
-  const ingredient = INGREDIENTS[row.ingredientKey];
-
+}: Props) {
   return (
     <div className="grid grid-cols-5 gap-2">
       <select
         value={row.ingredientKey}
         onChange={(e) =>
-          onChange({ ...row, ingredientKey: e.target.value })
+          onChange({
+            ...row,
+            ingredientKey: e.target.value as IngredientKey,
+          })
         }
         className="border p-2 rounded"
       >
@@ -34,17 +40,22 @@ export default function IngredientRow({
         type="number"
         value={row.costPerKg}
         onChange={(e) =>
-          onChange({ ...row, costPerKg: +e.target.value })
+          onChange({
+            ...row,
+            costPerKg: Number(e.target.value),
+          })
         }
         className="border p-2 rounded"
-        placeholder="Cost"
       />
 
       <input
         type="number"
         value={row.minKg}
         onChange={(e) =>
-          onChange({ ...row, minKg: +e.target.value })
+          onChange({
+            ...row,
+            minKg: Number(e.target.value),
+          })
         }
         className="border p-2 rounded"
       />
@@ -53,12 +64,18 @@ export default function IngredientRow({
         type="number"
         value={row.maxKg}
         onChange={(e) =>
-          onChange({ ...row, maxKg: +e.target.value })
+          onChange({
+            ...row,
+            maxKg: Number(e.target.value),
+          })
         }
         className="border p-2 rounded"
       />
 
-      <button onClick={onRemove} className="text-red-500">
+      <button
+        onClick={onRemove}
+        className="text-red-500"
+      >
         ✕
       </button>
     </div>

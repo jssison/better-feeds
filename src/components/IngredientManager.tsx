@@ -1,5 +1,15 @@
-import type { Ingredient, SpeciesGroup } from "../data/types";
+import type { UserIngredientRow, SpeciesGroup } from "../data/types";
 import IngredientRow from "./IngredientRow";
+
+interface Props {
+  ingredients: UserIngredientRow[];
+  setIngredients: React.Dispatch<
+    React.SetStateAction<UserIngredientRow[]>
+  >;
+  totalFeedKg: number;
+  setTotalFeedKg: (v: number) => void;
+  speciesGroup: SpeciesGroup;
+}
 
 export default function IngredientManager({
     ingredients,
@@ -7,13 +17,7 @@ export default function IngredientManager({
     totalFeedKg,
     setTotalFeedKg,
     speciesGroup
-}: {
-    ingredients: Ingredient[]
-    setIngredients: any
-    totalFeedKg: number
-    setTotalFeedKg: any
-    speciesGroup: SpeciesGroup
-}) {
+}: Props) {
     const addRow = () => {
         setIngredients((prev:any) => [
             ...prev,
