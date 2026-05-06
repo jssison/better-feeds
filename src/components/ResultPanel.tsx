@@ -158,7 +158,7 @@ export default function ResultPanel({ result }: { result: OptimizerOutput }) {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
           <p className="text-sm font-bold text-slate-800">Feed composition</p>
-          <p className="text-xs text-slate-400">{composition.length} ingredients</p>
+          <p className="text-xs font-bold text-slate-600">{composition.length} ingredients</p>
         </div>
 
         {/* Proportional stacked bar */}
