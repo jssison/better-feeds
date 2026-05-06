@@ -8,6 +8,7 @@ import GrowthStageSelector from "./components/GrowthStageSelector";
 import NutrientEditor from "./components/NutrientEditor";
 import IngredientManager from "./components/IngredientManager";
 import ResultPanel from "./components/ResultPanel";
+import EmailModal from "./components/EmailModal";
 
 import { useFeedOptimizer } from "./hooks/useFeedOptimizer";
 
@@ -23,6 +24,7 @@ import type {
 
 import { ANIMALS } from "./data/animals";
 import SplashScreen from "./Splash";
+import { select } from "framer-motion/client";
 
 // ─── Step card wrapper ────────────────────────────────────────────────────────
 
@@ -140,6 +142,9 @@ export default function FeedOptimizer() {
     !!animalType && !!growthStage && !!speciesGroup && ingredients.length > 0;
 
   const [showSplash, setShowSplash] = useState(true);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+
+  const stageLabel = selectedAnimal?.stages.find((s) => s.key === growthStage)?.label ?? "";
 
   // ── Handlers ────────────────────────────────────────────────────────────────
 
@@ -329,6 +334,21 @@ export default function FeedOptimizer() {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <ResultPanel result={result} />
+                {result?.feasible && (
+                  <div className="flex justify-end pt-2">
+                    <button
+                      onClick={() => setEmailModalOpen(true)}
+                      className={[
+                        "flex items-center gap-2 px-4 py-2 rounded-xl border-2",
+                        "border-emerald-700 text-emerald-800 text-sm font-semibold",
+                        "hover:bg-emerald-50 transition-colors duration-150 focus:outline-none",
+                        "focus-visible:ring-2 focus-visible:ring-emerald-700",
+                      ].join(" ")}
+                    >
+                      <span>✉️</span> Email results
+                    </button>
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -352,6 +372,14 @@ export default function FeedOptimizer() {
 
         </div>
       </motion.div>
+      <EmailModal
+        isOpen={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        result={result!}
+        animalLabel={selectedAnimal?.label ?? ""}
+        stageLabel={stageLabel}
+        totalFeedKg={totalFeedKg}
+      />
     </>
   );
 }
