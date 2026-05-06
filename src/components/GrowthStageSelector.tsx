@@ -10,6 +10,17 @@ interface Props {
 export default function GrowthStageSelector({ animal, selected, onSelect }: Props) {
   return (
     <div className="flex flex-col gap-2">
+      {/* Legend */}
+      <div className="flex gap-3 px-1 pb-3 border-b border-slate-100">
+        <span className="text-[11px] text-slate-400">
+          <span className="font-bold text-slate-500">CP</span> — Crude Protein
+        </span>
+        <span className="text-[11px] text-slate-400">·</span>
+        <span className="text-[11px] text-slate-400">
+          <span className="font-bold text-slate-500">ME</span> — Metabolizable Energy
+        </span>
+      </div>
+
       {animal.stages.map((s) => {
         const isSelected = selected === s.key;
         const req = NUTRIENT_REQUIREMENTS[s.key];
