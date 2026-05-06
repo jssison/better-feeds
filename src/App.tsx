@@ -24,7 +24,6 @@ import type {
 
 import { ANIMALS } from "./data/animals";
 import SplashScreen from "./Splash";
-import { select } from "framer-motion/client";
 
 // ─── Step card wrapper ────────────────────────────────────────────────────────
 
