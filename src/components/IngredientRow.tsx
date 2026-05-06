@@ -41,7 +41,7 @@ function Field({ label, children, className = "" }: FieldProps) {
   );
 }
 
-export default function IngredientRow({ row, usedKeys, onChange, onRemove }: Props) {
+export default function IngredientRow({ row, speciesGroup, usedKeys, onChange, onRemove }: Props) {
   return (
     <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-3">
       {/* Ingredient selector — full width */}
@@ -128,6 +128,19 @@ export default function IngredientRow({ row, usedKeys, onChange, onRemove }: Pro
           </div>
         </Field>
       </div>
+      <div className="flex gap-4 text- text-slate-500 pt-1">
+        <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+          Protein: {" "}
+          <span className="font-medium text-slate-800">{INGREDIENTS[row.ingredientKey].nutrients.protein}</span>
+          <span className="font-medium text-slate-800">{" "}%</span>
+        </span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+          Metabolizable Energy: {" "}
+          <span className="font-medium text-slate-800">{INGREDIENTS[row.ingredientKey].nutrients.me[speciesGroup]}</span>
+          <span className="font-medium text-slate-800 lowercase">{" "}kcal/kg</span>
+        </span>
+      </div>
+      
     </div>
   );
 }
