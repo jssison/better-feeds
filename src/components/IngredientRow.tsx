@@ -82,7 +82,7 @@ export default function IngredientRow({ row, speciesGroup, usedKeys, onChange, o
       </div>
 
       {/* Cost + Min + Max — side by side on all breakpoints */}
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         <Field label="Cost per kg">
           <div className="relative">
             <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 font-semibold pointer-events-none">
@@ -97,36 +97,37 @@ export default function IngredientRow({ row, speciesGroup, usedKeys, onChange, o
             />
           </div>
         </Field>
+        <div className="grid grid-cols-2 gap-2 sm:col-span-2">
+          <Field label="Min inclusion">
+            <div className="relative">
+              <input
+                type="number"
+                min={0}
+                value={row.minKg}
+                onChange={(e) => onChange({ ...row, minKg: Number(e.target.value) })}
+                className={`${inputCls} pr-6 sm:pr-8`}
+              />
+              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">
+                kg
+              </span>
+            </div>
+          </Field>
 
-        <Field label="Min inclusion">
-          <div className="relative">
-            <input
-              type="number"
-              min={0}
-              value={row.minKg}
-              onChange={(e) => onChange({ ...row, minKg: Number(e.target.value) })}
-              className={`${inputCls} pr-8`}
-            />
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">
-              kg
-            </span>
-          </div>
-        </Field>
-
-        <Field label="Max inclusion">
-          <div className="relative">
-            <input
-              type="number"
-              min={0}
-              value={row.maxKg}
-              onChange={(e) => onChange({ ...row, maxKg: Number(e.target.value) })}
-              className={`${inputCls} pr-8`}
-            />
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">
-              kg
-            </span>
-          </div>
-        </Field>
+          <Field label="Max inclusion">
+            <div className="relative">
+              <input
+                type="number"
+                min={0}
+                value={row.maxKg}
+                onChange={(e) => onChange({ ...row, maxKg: Number(e.target.value) })}
+                className={`${inputCls} pr-6 sm:pr-8`}
+              />
+              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 pointer-events-none">
+                kg
+              </span>
+            </div>
+          </Field>
+        </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-1 lg:gap-4 text- text-slate-500 pt-1">
         <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
