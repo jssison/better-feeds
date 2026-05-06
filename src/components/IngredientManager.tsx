@@ -116,7 +116,7 @@ export default function IngredientManager({
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-00",
                     allUsed
                         ? "border-slate-200 text-slate-300 cursor-not-allowed"
-                        : "border-emerald-300 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-500",
+                        : "border-emerald-600 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-500",
                     ].join(" ")}
                 >
                     Select all

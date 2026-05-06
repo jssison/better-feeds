@@ -41,7 +41,7 @@ export default function SplashScreen({ onComplete }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
           >
-            Feed Formulation Optimizer
+            BetterFeeds
           </motion.h1>
 
           {/* Tagline */}

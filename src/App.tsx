@@ -212,7 +212,7 @@ export default function FeedOptimizer() {
             </div>
             <div className="min-w-0">
               <h1 className="text-base sm:text-lg font-bold text-white tracking-tight leading-tight">
-                Feed Formulation Optimizer
+                BetterFeeds: A Farm Feed Optimizer
               </h1>
               <p className="text-xs sm:text-sm text-emerald-300 mt-0.5">
                 Least-cost ration balancing via linear programming
