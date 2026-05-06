@@ -25,7 +25,7 @@ import type {
 import { ANIMALS } from "./data/animals";
 import SplashScreen from "./Splash";
 
-// ─── Step card wrapper ────────────────────────────────────────────────────────
+//step card wrapper
 
 interface StepCardProps {
   step: number;
@@ -78,7 +78,7 @@ function StepCard({ step, title, subtitle, done, active, children }: StepCardPro
           )}
         </div>
 
-        {/* Done chip — show on collapsed done cards */}
+        {/* Done chip, show on collapsed done cards */}
         {done && !active && (
           <span className="ml-auto text-[10px] font-bold uppercase tracking-widest text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full flex-shrink-0">
             Done
@@ -106,7 +106,7 @@ function StepCard({ step, title, subtitle, done, active, children }: StepCardPro
   );
 }
 
-// ─── Divider between steps ────────────────────────────────────────────────────
+//divider between steps 
 
 function StepDivider() {
   return (
@@ -116,7 +116,7 @@ function StepDivider() {
   );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+//main component
 
 export default function FeedOptimizer() {
   const [animalType,   setAnimalType]   = useState<AnimalType   | null>(null);
@@ -145,7 +145,7 @@ export default function FeedOptimizer() {
 
   const stageLabel = selectedAnimal?.stages.find((s) => s.key === growthStage)?.label ?? "";
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
+  //handlers
 
   const handleSelectAnimal = (animal: AnimalOption) => {
     setAnimalType(animal.key);
@@ -187,8 +187,8 @@ export default function FeedOptimizer() {
     })
   };
 
-  // ── Step visibility ──────────────────────────────────────────────────────────
-  // Each step is "active" if its prerequisite is satisfied.
+  //step visibility
+  //each step is "active" if its prerequisite is satisfied.
   const step2Active = !!animalType;
   const step3Active = !!growthStage;
   const step4Active = !!growthStage && !!speciesGroup;
@@ -206,7 +206,7 @@ export default function FeedOptimizer() {
       >
         <div className="max-w-2xl mx-auto space-y-2">
 
-          {/* ── Page header ──────────────────────────────────────────────────── */}
+          {/* page header */}
           <div className="bg-emerald-900 rounded-2xl px-5 py-5 flex items-center gap-4 mb-4">
             <div
               className="w-11 h-11 rounded-xl bg-emerald-700 flex items-center justify-center text-2xl flex-shrink-0"
@@ -224,7 +224,7 @@ export default function FeedOptimizer() {
             </div>
           </div>
 
-          {/* ── Step 1: Animal type ──────────────────────────────────────────── */}
+          {/* Step 1: Animal type  */}
           <StepCard
             step={1}
             title="Select animal type"
@@ -240,7 +240,7 @@ export default function FeedOptimizer() {
 
           <StepDivider />
 
-          {/* ── Step 2: Growth stage ─────────────────────────────────────────── */}
+          {/*  Step 2: Growth stage  */}
           <StepCard
             step={2}
             title="Select growth stage"
@@ -259,7 +259,7 @@ export default function FeedOptimizer() {
 
           <StepDivider />
 
-          {/* ── Step 3: Nutrient requirements ────────────────────────────────── */}
+          {/* Step 3: Nutrient requirements */}
           <StepCard
             step={3}
             title="Nutrient requirements"
@@ -272,7 +272,7 @@ export default function FeedOptimizer() {
 
           <StepDivider />
 
-          {/* ── Step 4: Ingredients ──────────────────────────────────────────── */}
+          {/* Step 4: Ingredients */}
           <StepCard
             step={4}
             title="Ingredients &amp; constraints"
@@ -289,7 +289,7 @@ export default function FeedOptimizer() {
             />
           </StepCard>
 
-          {/* ── Optimize button ──────────────────────────────────────────────── */}
+          {/* Optimize button */}
           {canOptimize && (
             <div className="pt-2">
               <motion.button
@@ -322,7 +322,7 @@ export default function FeedOptimizer() {
             </div>
           )}
 
-          {/* ── Results ──────────────────────────────────────────────────────── */}
+          {/* Results */}
           <AnimatePresence>
             {result && (
               <motion.div
