@@ -159,6 +159,7 @@ export default function FeedOptimizer() {
 
   const handleOptimize = () => {
     if (!animalType || !growthStage || !speciesGroup) return;
+    setResult(null);
     setIsOptimizing(true);
 
     const DELAY = 1000;
@@ -197,160 +198,158 @@ export default function FeedOptimizer() {
         initial={{ opacity:0 }}
         animate={{ opacity: showSplash ? 0:1 }}
         transition={{ duration: 0.4 }}
-        className="min-h-screen bg-slate-100 py-6 px-4 pb-20"
+        className="min-h-screen bg-[#F7F3EB] py-6 px-4 pb-20"
       >
-        <div className="min-h-screen bg-slate-100 py-6 px-4 pb-20">
-          <div className="max-w-2xl mx-auto space-y-2">
+        <div className="max-w-2xl mx-auto space-y-2">
 
-            {/* ── Page header ──────────────────────────────────────────────────── */}
-            <div className="bg-emerald-900 rounded-2xl px-5 py-5 flex items-center gap-4 mb-4">
-              <div
-                className="w-11 h-11 rounded-xl bg-emerald-700 flex items-center justify-center text-2xl flex-shrink-0"
-                aria-hidden="true"
-              >
-                🌾
-              </div>
-              <div className="min-w-0">
-                <h1 className="text-base sm:text-lg font-bold text-white tracking-tight leading-tight">
-                  Feed Formulation Optimizer
-                </h1>
-                <p className="text-xs sm:text-sm text-emerald-300 mt-0.5">
-                  Least-cost ration balancing via linear programming
-                </p>
-              </div>
+          {/* ── Page header ──────────────────────────────────────────────────── */}
+          <div className="bg-emerald-900 rounded-2xl px-5 py-5 flex items-center gap-4 mb-4">
+            <div
+              className="w-11 h-11 rounded-xl bg-emerald-700 flex items-center justify-center text-2xl flex-shrink-0"
+              aria-hidden="true"
+            >
+              🌾
             </div>
-
-            {/* ── Step 1: Animal type ──────────────────────────────────────────── */}
-            <StepCard
-              step={1}
-              title="Select animal type"
-              done={!!animalType}
-              active={true}
-            >
-              <AnimalSelector
-                animals={ANIMALS}
-                selected={animalType}
-                onSelect={handleSelectAnimal}
-              />
-            </StepCard>
-
-            <StepDivider />
-
-            {/* ── Step 2: Growth stage ─────────────────────────────────────────── */}
-            <StepCard
-              step={2}
-              title="Select growth stage"
-              subtitle={selectedAnimal?.label}
-              done={!!growthStage}
-              active={step2Active}
-            >
-              {selectedAnimal && (
-                <GrowthStageSelector
-                  animal={selectedAnimal}
-                  selected={growthStage}
-                  onSelect={handleSelectStage}
-                />
-              )}
-            </StepCard>
-
-            <StepDivider />
-
-            {/* ── Step 3: Nutrient requirements ────────────────────────────────── */}
-            <StepCard
-              step={3}
-              title="Nutrient requirements"
-              subtitle="Auto-filled from growth stage — edit if needed"
-              done={step3Active}
-              active={step3Active}
-            >
-              <NutrientEditor value={nutrients} onChange={setNutrients} />
-            </StepCard>
-
-            <StepDivider />
-
-            {/* ── Step 4: Ingredients ──────────────────────────────────────────── */}
-            <StepCard
-              step={4}
-              title="Ingredients &amp; constraints"
-              subtitle="Add ingredients, set costs and inclusion bounds"
-              done={ingredients.length > 0 && step4Active}
-              active={step4Active}
-            >
-              <IngredientManager
-                ingredients={ingredients}
-                setIngredients={setIngredients}
-                totalFeedKg={totalFeedKg}
-                setTotalFeedKg={setTotalFeedKg}
-                speciesGroup={speciesGroup!}
-              />
-            </StepCard>
-
-            {/* ── Optimize button ──────────────────────────────────────────────── */}
-            {canOptimize && (
-              <div className="pt-2">
-                <motion.button
-                  onClick={handleOptimize}
-                  disabled={isOptimizing}
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className={[
-                    "w-full flex items-center justify-center gap-3",
-                    "py-4 rounded-2xl font-bold text-base text-white",
-                    "focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400",
-                    isOptimizing
-                      ? "bg-emerald-700 opacity-70 cursor-wait"
-                      : "bg-emerald-800 hover:bg-emerald-700",
-                  ].join(" ")}
-                >
-                  {isOptimizing ? (
-                    <>
-                      <span className="animate-spin text-lg">⚙️</span>
-                      Optimizing…
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-lg" aria-hidden="true">⚗️</span>
-                      Optimize feed formulation
-                    </>
-                  )}
-                </motion.button>
-              </div>
-            )}
-
-            {/* ── Results ──────────────────────────────────────────────────────── */}
-            <AnimatePresence>
-              {result && (
-                <motion.div
-                  key="result"
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 12 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                >
-                  <ResultPanel result={result} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-            
-            {result && (
-              <div className="pt-2">
-                {/* Section label */}
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex-1 h-px bg-slate-200" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
-                    Results
-                  </span>
-                  <div className="flex-1 h-px bg-slate-200" />
-                </div>
-                {/* Re-optimize hint */}
-                <p className="text-center text-xs text-slate-400 mt-4">
-                  Adjust ingredients or nutrient requirements above and optimize again.
-                </p>
-              </div>
-            )}
-
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-lg font-bold text-white tracking-tight leading-tight">
+                Feed Formulation Optimizer
+              </h1>
+              <p className="text-xs sm:text-sm text-emerald-300 mt-0.5">
+                Least-cost ration balancing via linear programming
+              </p>
+            </div>
           </div>
+
+          {/* ── Step 1: Animal type ──────────────────────────────────────────── */}
+          <StepCard
+            step={1}
+            title="Select animal type"
+            done={!!animalType}
+            active={true}
+          >
+            <AnimalSelector
+              animals={ANIMALS}
+              selected={animalType}
+              onSelect={handleSelectAnimal}
+            />
+          </StepCard>
+
+          <StepDivider />
+
+          {/* ── Step 2: Growth stage ─────────────────────────────────────────── */}
+          <StepCard
+            step={2}
+            title="Select growth stage"
+            subtitle={selectedAnimal?.label}
+            done={!!growthStage}
+            active={step2Active}
+          >
+            {selectedAnimal && (
+              <GrowthStageSelector
+                animal={selectedAnimal}
+                selected={growthStage}
+                onSelect={handleSelectStage}
+              />
+            )}
+          </StepCard>
+
+          <StepDivider />
+
+          {/* ── Step 3: Nutrient requirements ────────────────────────────────── */}
+          <StepCard
+            step={3}
+            title="Nutrient requirements"
+            subtitle="Auto-filled from growth stage — edit if needed"
+            done={step3Active}
+            active={step3Active}
+          >
+            <NutrientEditor value={nutrients} onChange={setNutrients} />
+          </StepCard>
+
+          <StepDivider />
+
+          {/* ── Step 4: Ingredients ──────────────────────────────────────────── */}
+          <StepCard
+            step={4}
+            title="Ingredients &amp; constraints"
+            subtitle="Add ingredients, set costs and inclusion bounds"
+            done={ingredients.length > 0 && step4Active}
+            active={step4Active}
+          >
+            <IngredientManager
+              ingredients={ingredients}
+              setIngredients={setIngredients}
+              totalFeedKg={totalFeedKg}
+              setTotalFeedKg={setTotalFeedKg}
+              speciesGroup={speciesGroup!}
+            />
+          </StepCard>
+
+          {/* ── Optimize button ──────────────────────────────────────────────── */}
+          {canOptimize && (
+            <div className="pt-2">
+              <motion.button
+                onClick={handleOptimize}
+                disabled={isOptimizing}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className={[
+                  "w-full flex items-center justify-center gap-3",
+                  "py-4 rounded-2xl font-bold text-base text-white",
+                  "focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400",
+                  isOptimizing
+                    ? "bg-emerald-700 opacity-70 cursor-wait"
+                    : "bg-emerald-800 hover:bg-emerald-700",
+                ].join(" ")}
+              >
+                {isOptimizing ? (
+                  <>
+                    <span className="animate-spin text-lg">⚙️</span>
+                    Optimizing…
+                  </>
+                ) : (
+                  <>
+                    <span className="text-lg" aria-hidden="true">⚗️</span>
+                    Optimize feed formulation
+                  </>
+                )}
+              </motion.button>
+            </div>
+          )}
+
+          {/* ── Results ──────────────────────────────────────────────────────── */}
+          <AnimatePresence>
+            {result && (
+              <motion.div
+                key="result"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 12 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <ResultPanel result={result} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
+          {result && (
+            <div className="pt-2">
+              {/* Section label */}
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex-1 h-px bg-slate-200" />
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                  Results
+                </span>
+                <div className="flex-1 h-px bg-slate-200" />
+              </div>
+              {/* Re-optimize hint */}
+              <p className="text-center text-xs text-slate-400 mt-4">
+                Adjust ingredients or nutrient requirements above and optimize again.
+              </p>
+            </div>
+          )}
+
         </div>
       </motion.div>
     </>
