@@ -44,7 +44,7 @@ export default function GrowthStageSelector({ animal, selected, onSelect }: Prop
                 isSelected ? "text-white" : "text-slate-800",
               ].join(" ")}
             >
-              {s.label}
+              {s.label} ({s?.age ?? s.weightRange})
             </span>
 
             {/* Nutrient badges */}

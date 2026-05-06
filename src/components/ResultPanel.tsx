@@ -154,15 +154,15 @@ export default function ResultPanel({ result }: { result: OptimizerOutput }) {
       </div>
 
       {/* ── Composition table ───────────────────────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <div className="bg-white border-2 border-emerald-600 rounded-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
           <p className="text-sm font-bold text-slate-800">Feed composition</p>
-          <p className="text-xs text-slate-400">{composition.length} ingredients</p>
+          <p className="text-xs font-bold text-slate-600">{composition.length} ingredients</p>
         </div>
 
         {/* Proportional stacked bar */}
-        <div className="flex h-2 overflow-hidden">
+        <div className="flex h-2 overflow-hidden px-1 pl-0">
           {composition.map((c, i) => {
             const w = totalWeightKg > 0 ? (c.amountKg / totalWeightKg) * 100 : 0;
             return (
@@ -170,6 +170,7 @@ export default function ResultPanel({ result }: { result: OptimizerOutput }) {
                 key={c.ingredientKey}
                 style={{ width: `${w}%`, background: PALETTE[i % PALETTE.length] }}
                 title={`${c.label}: ${w.toFixed(1)}%`}
+                className={i === 0 ? "" : "border-l border-white rounded-lg"}
               />
             );
           })}
