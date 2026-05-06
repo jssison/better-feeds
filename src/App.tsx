@@ -198,7 +198,7 @@ export default function FeedOptimizer() {
         initial={{ opacity:0 }}
         animate={{ opacity: showSplash ? 0:1 }}
         transition={{ duration: 0.4 }}
-        className="min-h-screen bg-[#F7F3EB] py-6 px-4 pb-20"
+        className="min-h-screen bg-slate-50 py-6 px-4 pb-20"
       >
         <div className="max-w-2xl mx-auto space-y-2">
 
@@ -295,7 +295,7 @@ export default function FeedOptimizer() {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 className={[
-                  "w-full flex items-center justify-center gap-3",
+                  "w-full flex items-center justify-center gap-3 mb-4",
                   "py-4 rounded-2xl font-bold text-base text-white",
                   "focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400",
                   isOptimizing
