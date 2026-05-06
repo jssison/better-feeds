@@ -154,7 +154,7 @@ export default function ResultPanel({ result }: { result: OptimizerOutput }) {
       </div>
 
       {/* ── Composition table ───────────────────────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <div className="bg-white border-2 border-emerald-600 rounded-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
           <p className="text-sm font-bold text-slate-800">Feed composition</p>
