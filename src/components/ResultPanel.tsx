@@ -162,7 +162,7 @@ export default function ResultPanel({ result }: { result: OptimizerOutput }) {
         </div>
 
         {/* Proportional stacked bar */}
-        <div className="flex h-2 overflow-hidden px-1 pl-0">
+        <div className="flex h-2 overflow-hidden px-1">
           {composition.map((c, i) => {
             const w = totalWeightKg > 0 ? (c.amountKg / totalWeightKg) * 100 : 0;
             return (
@@ -170,7 +170,7 @@ export default function ResultPanel({ result }: { result: OptimizerOutput }) {
                 key={c.ingredientKey}
                 style={{ width: `${w}%`, background: PALETTE[i % PALETTE.length] }}
                 title={`${c.label}: ${w.toFixed(1)}%`}
-                className={i === 0 ? "" : "border-l border-white rounded-lg"}
+                className="border-l border-white rounded-lg"
               />
             );
           })}
