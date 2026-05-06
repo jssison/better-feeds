@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import type { UserIngredientRow, SpeciesGroup } from "../data/types";
+import type { UserIngredientRow, SpeciesGroup, IngredientKey } from "../data/types";
 import IngredientRow from "./IngredientRow";
+import { INGREDIENTS } from "../data/ingredients";
 
 interface Props {
     ingredients: UserIngredientRow[];
@@ -17,12 +18,23 @@ export default function IngredientManager({
     setTotalFeedKg,
     speciesGroup,
     }: Props) {
+
+    //keep track of selected ingredients
+    const usedKeys = new Set(ingredients.map((r) => r.ingredientKey));
+    const allUsed = usedKeys.size >= Object.keys(INGREDIENTS).length;
+
     const addRow = () => {
+        const firstUnused = Object.keys(INGREDIENTS).find(
+            (k) => !usedKeys.has(k as IngredientKey)
+        );
+
+        if (!firstUnused) return;
+
         setIngredients((prev) => [
         ...prev,
         {
             id: crypto.randomUUID(),
-            ingredientKey: "yellow_corn",
+            ingredientKey: firstUnused as IngredientKey,
             costPerKg: 0,
             minKg: 0,
             maxKg: totalFeedKg,
@@ -35,31 +47,31 @@ export default function IngredientManager({
         {/* Total feed input */}
         <div className="flex flex-col sm:flex-row sm:items-end gap-3 pb-4 border-b border-slate-100">
             <div className="flex flex-col gap-1.5 sm:w-48">
-            <label className="flex flex-col gap-0.5">
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500">
-                Total feed batch
-                </span>
-                <span className="text-xs text-slate-400">
-                Total weight to formulate
-                </span>
-            </label>
-            <div className="relative">
-                <input
-                type="number"
-                min={1}
-                value={totalFeedKg}
-                onChange={(e) => setTotalFeedKg(Number(e.target.value))}
-                className={[
-                    "w-full pl-3 pr-10 py-2.5 rounded-xl border-2 border-slate-200 bg-white",
-                    "text-slate-900 font-mono text-sm font-semibold",
-                    "focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100",
-                    "transition-colors duration-150",
-                ].join(" ")}
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 pointer-events-none">
-                kg
-                </span>
-            </div>
+                <label className="flex flex-col gap-0.5">
+                    <span className="text-xs font-bold uppercase tracking-widest text-slate-500">
+                        Total feed batch
+                    </span>
+                    <span className="text-xs text-slate-400">
+                        Total weight to formulate
+                    </span>
+                </label>
+                <div className="relative">
+                    <input
+                        type="number"
+                        min={1}
+                        value={totalFeedKg}
+                        onChange={(e) => setTotalFeedKg(Number(e.target.value))}
+                        className={[
+                            "w-full pl-3 pr-10 py-2.5 rounded-xl border-2 border-slate-200 bg-white",
+                            "text-slate-900 font-mono text-sm font-semibold",
+                            "focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100",
+                            "transition-colors duration-150",
+                        ].join(" ")}
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 pointer-events-none">
+                    kg
+                    </span>
+                </div>
             </div>
 
             {totalFeedKg > 0 && (
@@ -82,6 +94,7 @@ export default function IngredientManager({
                         key={row.id}
                         row={row}
                         speciesGroup={speciesGroup}
+                        usedKeys={usedKeys}
                         onChange={(updated) =>
                             setIngredients((prev) =>
                             prev.map((r) => (r.id === row.id ? updated : r))
@@ -96,25 +109,30 @@ export default function IngredientManager({
         </AnimatePresence>
 
         {/* Add ingredient button */}
-        <button
-            onClick={addRow}
-            className={[
-            "w-full flex items-center justify-center gap-2",
-            "py-3 rounded-xl border-2 border-dashed border-emerald-300",
-            "text-sm font-semibold text-emerald-700",
-            "hover:bg-emerald-50 hover:border-emerald-500",
-            "transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600",
-            ].join(" ")}
-        >
-            <span className="text-lg leading-none">+</span>
-            Add ingredient
-        </button>
+        {!allUsed && (
+            <>
+                <button
+                    onClick={addRow}
+                    className={[
+                    "w-full flex items-center justify-center gap-2",
+                    "py-3 rounded-xl border-2 border-dashed border-emerald-300",
+                    "text-sm font-semibold text-emerald-700",
+                    "hover:bg-emerald-50 hover:border-emerald-500",
+                    "transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600",
+                    ].join(" ")}
+                >
+                    <span className="text-lg leading-none">+</span>
+                    Add ingredient
+                </button>
 
-        {ingredients.length === 0 && (
-            <p className="text-center text-xs text-slate-400 -mt-2">
-            Add at least one ingredient to proceed.
-            </p>
+                {ingredients.length === 0 && (
+                    <p className="text-center text-xs text-slate-400 -mt-2">
+                    Add at least one ingredient to proceed.
+                    </p>
+                )}
+            </>
         )}
+        
         </div>
     );
 }

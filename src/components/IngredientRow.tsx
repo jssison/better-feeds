@@ -4,6 +4,7 @@ import { INGREDIENTS } from "../data/ingredients";
 interface Props {
   row: UserIngredientRow;
   speciesGroup: SpeciesGroup;
+  usedKeys: Set<string>
   onChange: (row: UserIngredientRow) => void;
   onRemove: () => void;
 }
@@ -40,7 +41,7 @@ function Field({ label, children, className = "" }: FieldProps) {
   );
 }
 
-export default function IngredientRow({ row, onChange, onRemove }: Props) {
+export default function IngredientRow({ row, usedKeys, onChange, onRemove }: Props) {
   return (
     <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-3">
       {/* Ingredient selector — full width */}
@@ -53,11 +54,15 @@ export default function IngredientRow({ row, onChange, onRemove }: Props) {
             }
             className={selectCls}
           >
-            {Object.values(INGREDIENTS).map((i) => (
-              <option key={i.key} value={i.key}>
-                {i.label}
-              </option>
-            ))}
+            {Object.values(INGREDIENTS).map((i) => {
+              const taken = usedKeys.has(i.key) && i.key !== row.ingredientKey;
+              
+              return(
+                <option key={i.key} value={i.key} disabled={taken}>
+                  {i.label}{taken ? " (already selected)": ""}
+                </option>
+              )
+            })}
           </select>
         </Field>
 
