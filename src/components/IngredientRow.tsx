@@ -97,7 +97,7 @@ export default function IngredientRow({ row, speciesGroup, usedKeys, onChange, o
             />
           </div>
         </Field>
-        <div className="grid grid-cols-2 gap-2 sm:col-span-1">
+        <div className="grid grid-cols-2 gap-2 sm:col-span-2">
           <Field label="Min inclusion">
             <div className="relative">
               <input
