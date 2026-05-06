@@ -131,7 +131,7 @@ export default function IngredientRow({ row, speciesGroup, usedKeys, onChange, o
       </div>
       <div className="flex flex-col lg:flex-row gap-1 lg:gap-4 text- text-slate-500 pt-1">
         <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-          Protein: {" "}
+          Crude Protein: {" "}
           <span className="font-medium text-slate-800">{INGREDIENTS[row.ingredientKey].nutrients.protein}</span>
           <span className="font-medium text-slate-800">%</span>
         </span>
