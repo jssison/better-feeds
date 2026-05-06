@@ -119,7 +119,7 @@ export default function IngredientManager({
                         : "border-emerald-600 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-500",
                     ].join(" ")}
                 >
-                    Select all
+                    Add all
                 </button>
                 <button
                     onClick={handleClearAll}
