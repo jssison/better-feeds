@@ -42,6 +42,27 @@ export default function IngredientManager({
         ]);
     };
 
+    const handleSelectAll = () => {
+        const allIngredientKeys = Object.keys(INGREDIENTS) as IngredientKey[];
+
+        const existingKeys = new Set(ingredients.map((r) => r.ingredientKey));
+        const missingKeys = allIngredientKeys.filter((k) => !existingKeys.has(k));
+    
+        const newRows: UserIngredientRow[] = missingKeys.map((k) => ({
+            id: crypto.randomUUID(),
+            ingredientKey: k,
+            costPerKg: 0,
+            minKg: 0,
+            maxKg: totalFeedKg,
+        }));
+
+        setIngredients((prev) => [...prev, ...newRows]);
+    }
+
+    const handleClearAll = () => {
+        setIngredients([])
+    }
+
     return (
         <div className="space-y-4">
         {/* Total feed input */}
@@ -81,6 +102,41 @@ export default function IngredientManager({
             )}
         </div>
 
+        {/* Toolbar */}
+        <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
+            {ingredients.length} / {Object.keys(INGREDIENTS).length} ingredients
+            </span>
+            <div className="flex gap-2">
+                <button
+                    onClick={handleSelectAll}
+                    disabled={allUsed}
+                    className={[
+                    "text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors duration-150",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-00",
+                    allUsed
+                        ? "border-slate-200 text-slate-300 cursor-not-allowed"
+                        : "border-emerald-300 text-emerald-700 hover:bg-emerald-50 hover:border-emerald-500",
+                    ].join(" ")}
+                >
+                    Select all
+                </button>
+                <button
+                    onClick={handleClearAll}
+                    disabled={ingredients.length === 0}
+                    className={[
+                    "text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors duration-150",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400",
+                    ingredients.length === 0
+                        ? "border-slate-200 text-slate-300 cursor-not-allowed"
+                        : "border-red-200 text-red-500 hover:bg-red-50 hover:border-red-400",
+                    ].join(" ")}
+                >
+                    Clear all
+                </button>
+            </div>
+        </div>
+
         <AnimatePresence initial={false}>
             {ingredients.map((row) => (
                 <motion.div
@@ -115,7 +171,7 @@ export default function IngredientManager({
                     onClick={addRow}
                     className={[
                     "w-full flex items-center justify-center gap-2",
-                    "py-3 rounded-xl border-2 border-dashed border-emerald-300",
+                    "py-3 rounded-xl border-2 border-dashed border-emerald-600",
                     "text-sm font-semibold text-emerald-700",
                     "hover:bg-emerald-50 hover:border-emerald-500",
                     "transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600",
